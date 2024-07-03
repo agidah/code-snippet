@@ -12,7 +12,7 @@ Sub ExecuteAllTasks()
         .AllowMultiSelect = False
         .Filters.Add "Excel Files", "*.xlsx"
         If .Show = -1 Then
-            TemplateFilePath = .SelectedItems(1)
+            TemplateFilePath = .SelectedItems(1) ' 선택한 파일 경로 저장
         Else
             Exit Sub ' 파일 선택을 취소한 경우 종료
         End If
@@ -26,7 +26,7 @@ Sub ExecuteAllTasks()
         .Title = "폴더를 선택하세요"
         .AllowMultiSelect = False
         If .Show = -1 Then
-            FolderPath = .SelectedItems(1) & "\"
+            FolderPath = .SelectedItems(1) & "\" ' 선택한 폴더 경로 저장
         Else
             wbSource.Close SaveChanges:=False
             Exit Sub ' 폴더 선택을 취소한 경우 종료
@@ -39,7 +39,7 @@ Sub ExecuteAllTasks()
         ' 현재 파일 열기
         Set wbTarget = Workbooks.Open(FolderPath & FileName)
         
-        ' 시트 복사
+        ' 템플릿 시트 복사
         wbSource.Sheets("갑지_협력사 전체 정산 확인용").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
         wbSource.Sheets("을지_협력사 소속 라이더 정산 확인용").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
         wbSource.Sheets("관리비 및 추가배달료").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
@@ -76,7 +76,7 @@ End Sub
 
 Sub 매크로4(wb As Workbook)
     With wb
-        ' 매크로 작업 수행
+        ' 매크로 작업 수행 - 특정 셀 범위를 복사하여 붙여넣기
         .Sheets("Sheet1").Range("C2").Copy
         .Sheets("갑지_협력사 전체 정산 확인용").Range("D5").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
@@ -120,7 +120,7 @@ Sub 매크로4(wb As Workbook)
         .Sheets("갑지_협력사 전체 정산 확인용").Range("C21").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
 
-        ' 매크로6 작업 수행
+        ' 매크로 작업 수행 - 두 번째 시트의 특정 셀 범위를 복사하여 붙여넣기
         .Sheets("Sheet2").Range("G2:I100").Copy
         .Sheets("을지_협력사 소속 라이더 정산 확인용").Range("B16").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
@@ -152,7 +152,7 @@ Sub 매크로4(wb As Workbook)
         .Sheets("관리비 및 추가배달료").Range("B14").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
 
-        ' 시트 삭제
+        ' 원본 시트 삭제
         Application.DisplayAlerts = False
         .Sheets("Sheet1").Delete
         .Sheets("Sheet2").Delete
