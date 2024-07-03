@@ -41,7 +41,7 @@ namespace ExcelRowSplitter
                     if (folderDialog.ShowDialog() == DialogResult.OK)
                     {
                         outputDirectory = folderDialog.SelectedPath; // 폴더 경로 저장
-                        ProcessExcelFile(filePath); // 엑셀 파일 처리
+                        ProcessExcelFile(filePath); // 엑셀 파일 처리 메서드 실행
                     }
                     else
                     {
@@ -83,7 +83,7 @@ namespace ExcelRowSplitter
                         headerRow[col] = header.GetCell(col)?.ToString();
                     }
 
-                    // 진행바 설정
+                    // 진행상황 표시바 설정
                     progressBar.Maximum = rowCount - 1;
                     progressBar.Value = 0;
 
@@ -114,7 +114,7 @@ namespace ExcelRowSplitter
             }
         }
 
-        // 파일명에서 특수문자 제거
+        // 파일명으로 사용할 수 없는 특수문자 제거
         private string CleanFileName(string fileName)
         {
             return Regex.Replace(fileName, @"[\\/:*?""<>|]", string.Empty);
