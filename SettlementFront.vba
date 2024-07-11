@@ -112,6 +112,15 @@ Sub 매크로4(wb As Workbook)
         .Sheets("Sheet1").Range("M2").Copy
         .Sheets("갑지_협력사 전체 정산 확인용").Range("E14").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
+        .Sheets("Sheet1").Range("P2").Copy
+        .Sheets("갑지_협력사 전체 정산 확인용").Range("B20").PasteSpecial Paste:=xlPasteValues
+        Application.CutCopyMode = False
+        .Sheets("Sheet1").Range("Q2").Copy
+        .Sheets("갑지_협력사 전체 정산 확인용").Range("C20").PasteSpecial Paste:=xlPasteValues
+        Application.CutCopyMode = False
+        .Sheets("Sheet1").Range("R2").Copy
+        .Sheets("갑지_협력사 전체 정산 확인용").Range("D20").PasteSpecial Paste:=xlPasteValues
+        Application.CutCopyMode = False
         .Sheets("Sheet1").Range("Q2").Copy
         .Sheets("갑지_협력사 전체 정산 확인용").Range("F14").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
@@ -130,12 +139,8 @@ Sub 매크로4(wb As Workbook)
         .Sheets("Sheet1").Range("AD2").Copy
         .Sheets("갑지_협력사 전체 정산 확인용").Range("N14").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
-        .Sheets("갑지_협력사 전체 정산 확인용").Range("D14").Copy
-        .Sheets("갑지_협력사 전체 정산 확인용").Range("C20").PasteSpecial Paste:=xlPasteValues
-        Application.CutCopyMode = False
-        .Sheets("갑지_협력사 전체 정산 확인용").Range("E14").Copy
-        .Sheets("갑지_협력사 전체 정산 확인용").Range("C21").PasteSpecial Paste:=xlPasteValues
-        Application.CutCopyMode = False
+        
+        
 
         ' 매크로 작업 수행 - 두 번째 시트의 특정 셀 범위를 복사하여 붙여넣기
         .Sheets("Sheet2").Range("G2:I100").Copy
@@ -168,6 +173,17 @@ Sub 매크로4(wb As Workbook)
         .Sheets("Sheet4").Range("E2:G100").Copy
         .Sheets("관리비 및 추가배달료").Range("B14").PasteSpecial Paste:=xlPasteValues
         Application.CutCopyMode = False
+        
+        Sheets("갑지_협력사 전체 정산 확인용").Select
+        Range("D14:N14").Select
+        Selection.NumberFormatLocal = "_ * #,##0_ ;-* #,##0_ ;-_ "
+        Range("B20:D20").Select
+        Selection.NumberFormatLocal = "_ * #,##0_ ;-* #,##0_ ;-_ "
+        Sheets("을지_협력사 소속 라이더 정산 확인용").Select
+        Range("E16:U218").Select
+        Range("D16:U218").Select
+        Selection.NumberFormatLocal = "_ * #,##0_ ;-* #,##0_ ;-_ "
+        
 
         ' 원본 시트 삭제
         Application.DisplayAlerts = False
