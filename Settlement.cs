@@ -400,7 +400,7 @@ namespace ExcelRowSplitter
         /// <param name="sheets">처리할 시트 배열</param>
         private void RemoveSpecificColumns(ISheet[] sheets)
         {
-            RemoveColumns(sheets[0], new[] { 6, 7, 8, 10, 11, 13, 14, 15, 17, 23, 24, 26, 27 });
+            RemoveColumns(sheets[0], new[] { 6, 7, 8, 10, 11, 13, 14, 23, 24, 26, 27 });
             RemoveColumns(sheets[1], new[] { 9, 10, 12, 13 });
         }
 
