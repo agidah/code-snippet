@@ -86,21 +86,24 @@ Sub CopySheets(wbSource As Workbook, wbTarget As Workbook)
     wbSource.Sheets("갑지_협력사 전체 정산 확인용").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
     wbSource.Sheets("을지_협력사 소속 라이더 정산 확인용").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
     wbSource.Sheets("관리비 및 추가배달료").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
+    wbSource.Sheets("고용보험소급정산").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
 End Sub
 
 Sub Macro4(wb As Workbook)
-    Dim wsSource1 As Worksheet, wsSource2 As Worksheet, wsSource3 As Worksheet, wsSource4 As Worksheet
-    Dim wsTarget1 As Worksheet, wsTarget2 As Worksheet, wsTarget3 As Worksheet
+    Dim wsSource1 As Worksheet, wsSource2 As Worksheet, wsSource3 As Worksheet, wsSource4 As Worksheet, wsSource5 As Worksheet
+    Dim wsTarget1 As Worksheet, wsTarget2 As Worksheet, wsTarget3 As Worksheet, wsTarget4 As Worksheet
     Dim LastRow As Long, i As Long
 
     Set wsSource1 = wb.Sheets("Sheet1")
     Set wsSource2 = wb.Sheets("Sheet2")
     Set wsSource3 = wb.Sheets("Sheet3")
     Set wsSource4 = wb.Sheets("Sheet4")
+    Set wsSource5 = wb.Sheets("Sheet5")
     
     Set wsTarget1 = wb.Sheets("갑지_협력사 전체 정산 확인용")
     Set wsTarget2 = wb.Sheets("을지_협력사 소속 라이더 정산 확인용")
     Set wsTarget3 = wb.Sheets("관리비 및 추가배달료")
+    Set wsTarget4 = wb.Sheets("고용보험소급정산")
     
     ' 매크로 작업 수행 - 특정 셀 범위를 복사하여 붙여넣기
     wsTarget1.Range("D5").Resize(4, 1).Value = Application.Transpose(wsSource1.Range("C2:F2").Value)
@@ -127,10 +130,15 @@ Sub Macro4(wb As Workbook)
     wsTarget3.Range("B9:K9").Value = wsSource3.Range("E2:N2").Value
     wsTarget3.Range("B15:D113").Value = wsSource4.Range("E2:G101").Value
     
+    wsTarget4.Range("A15:Z167").Value = wsSource5.Range("A2:Z154").Value
+    
+    
     ' 숫자 형식 적용
     wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget2.Range("E16:U115").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget4.Range("G15:O167").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget4.Range("T15:Z167").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     
     ' wsTarget2 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
     For i = 220 To 16 Step -1
@@ -146,12 +154,22 @@ Sub Macro4(wb As Workbook)
         End If
     Next i
     
+    
+    ' wsTarget4 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
+    For i = 167 To 16 Step -1
+        If wsTarget4.Cells(i, "B").Value = "" Then
+            wsTarget4.Rows(i).Delete Shift:=xlUp
+        End If
+    Next i
+    
+    
     ' 원본 시트 삭제
     Application.DisplayAlerts = False
     wsSource1.Delete
     wsSource2.Delete
     wsSource3.Delete
     wsSource4.Delete
+    wsSource5.Delete
     Application.DisplayAlerts = True
     
     ' 모든 시트의 커서를 A1로 이동
