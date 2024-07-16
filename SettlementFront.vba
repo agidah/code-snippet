@@ -118,37 +118,37 @@ Sub Macro4(wb As Workbook)
     wsTarget1.Range("M14").Value = wsSource1.Range("AC2").Value
     wsTarget1.Range("N14").Value = wsSource1.Range("AD2").Value
     
-    wsTarget2.Range("B16:D115").Value = wsSource2.Range("G2:I101").Value
-    wsTarget2.Range("E16:E115").Value = wsSource2.Range("L2:L101").Value
-    wsTarget2.Range("F16:F115").Value = wsSource2.Range("O2:O101").Value
-    wsTarget2.Range("G16:U115").Value = wsSource2.Range("P2:AE101").Value
+    wsTarget2.Range("B16:D316").Value = wsSource2.Range("G2:I302").Value
+    wsTarget2.Range("E16:E316").Value = wsSource2.Range("L2:L302").Value
+    wsTarget2.Range("F16:F316").Value = wsSource2.Range("O2:O302").Value
+    wsTarget2.Range("G16:U316").Value = wsSource2.Range("P2:AE302").Value
     
     wsTarget3.Range("B4").Value = wsSource1.Range("E2").Value
     wsTarget3.Range("C4").Value = wsSource1.Range("F2").Value
     wsTarget3.Range("D4").Value = wsSource1.Range("D2").Value
     wsTarget3.Range("E4").Value = wsSource1.Range("C2").Value
     wsTarget3.Range("B9:K9").Value = wsSource3.Range("E2:N2").Value
-    wsTarget3.Range("B15:D113").Value = wsSource4.Range("E2:G101").Value
+    wsTarget3.Range("B15:D215").Value = wsSource4.Range("E2:G202").Value
     
-    wsTarget4.Range("A15:Z167").Value = wsSource5.Range("A2:Z154").Value
+    wsTarget4.Range("A15:Z315").Value = wsSource5.Range("A2:Z302").Value
     
     
     ' 숫자 형식 적용
     wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget2.Range("E16:U115").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget4.Range("G15:O167").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget4.Range("T15:Z167").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget2.Range("E16:U316").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget4.Range("G15:O315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget4.Range("T15:Z315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     
     ' wsTarget2 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
-    For i = 220 To 16 Step -1
+    For i = 316 To 16 Step -1
         If wsTarget2.Cells(i, "B").Value = "" Then
             wsTarget2.Rows(i).Delete Shift:=xlUp
         End If
     Next i
     
     ' wsTarget3 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
-    For i = 114 To 16 Step -1
+    For i = 215 To 16 Step -1
         If wsTarget3.Cells(i, "B").Value = "" Then
             wsTarget3.Rows(i).Delete Shift:=xlUp
         End If
@@ -156,7 +156,7 @@ Sub Macro4(wb As Workbook)
     
     
     ' wsTarget4 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
-    For i = 167 To 16 Step -1
+    For i = 315 To 16 Step -1
         If wsTarget4.Cells(i, "B").Value = "" Then
             wsTarget4.Rows(i).Delete Shift:=xlUp
         End If
@@ -181,4 +181,3 @@ Sub Macro4(wb As Workbook)
     ' 첫 번째 시트를 선택
     wb.Worksheets(1).Activate
 End Sub
-
