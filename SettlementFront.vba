@@ -91,7 +91,8 @@ End Sub
 Sub Macro4(wb As Workbook)
     Dim wsSource1 As Worksheet, wsSource2 As Worksheet, wsSource3 As Worksheet, wsSource4 As Worksheet
     Dim wsTarget1 As Worksheet, wsTarget2 As Worksheet, wsTarget3 As Worksheet
-    
+    Dim LastRow As Long, i As Long
+
     Set wsSource1 = wb.Sheets("Sheet1")
     Set wsSource2 = wb.Sheets("Sheet2")
     Set wsSource3 = wb.Sheets("Sheet3")
@@ -119,14 +120,31 @@ Sub Macro4(wb As Workbook)
     wsTarget2.Range("F16:F115").Value = wsSource2.Range("O2:O101").Value
     wsTarget2.Range("G16:U115").Value = wsSource2.Range("P2:AE101").Value
     
-    wsTarget3.Range("B4:E4").Value = Application.Transpose(wsSource1.Range("C2:F2").Value)
+    wsTarget3.Range("B4").Value = wsSource1.Range("E2").Value
+    wsTarget3.Range("C4").Value = wsSource1.Range("F2").Value
+    wsTarget3.Range("D4").Value = wsSource1.Range("D2").Value
+    wsTarget3.Range("E4").Value = wsSource1.Range("C2").Value
     wsTarget3.Range("B9:K9").Value = wsSource3.Range("E2:N2").Value
-    wsTarget3.Range("B14:D113").Value = wsSource4.Range("E2:G101").Value
+    wsTarget3.Range("B15:D113").Value = wsSource4.Range("E2:G101").Value
     
     ' 숫자 형식 적용
     wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget2.Range("E16:U115").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    
+    ' wsTarget2 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
+    For i = 220 To 16 Step -1
+        If wsTarget2.Cells(i, "B").Value = "" Then
+            wsTarget2.Rows(i).Delete Shift:=xlUp
+        End If
+    Next i
+    
+    ' wsTarget3 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
+    For i = 114 To 16 Step -1
+        If wsTarget3.Cells(i, "B").Value = "" Then
+            wsTarget3.Rows(i).Delete Shift:=xlUp
+        End If
+    Next i
     
     ' 원본 시트 삭제
     Application.DisplayAlerts = False
