@@ -10,7 +10,7 @@ Sub ExecuteAllTasks3()
     Application.ScreenUpdating = False
     Application.Calculation = xlCalculationManual
     Application.EnableEvents = False
-    
+
     ' 템플릿 파일 선택 대화 상자를 열기
     With Application.FileDialog(msoFileDialogFilePicker)
         .Title = "템플릿 파일을 선택하세요"
@@ -83,16 +83,22 @@ Sub ExecuteAllTasks3()
 End Sub
 
 Sub CopySheets(wbSource As Workbook, wbTarget As Workbook)
-    wbSource.Sheets("갑지_협력사 전체 정산 확인용").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
-    wbSource.Sheets("을지_협력사 소속 라이더 정산 확인용").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
-    wbSource.Sheets("관리비 및 추가배달료").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
-    wbSource.Sheets("고용보험소급정산").Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
+    Dim ws As Worksheet
+    Dim sheetNames As Variant
+    Dim i As Long
+
+    sheetNames = Array("갑지_협력사 전체 정산 확인용", "을지_협력사 소속 라이더 정산 확인용", "관리비 및 추가배달료", "고용보험소급정산")
+
+    For i = LBound(sheetNames) To UBound(sheetNames)
+        wbSource.Sheets(sheetNames(i)).Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
+    Next i
 End Sub
 
 Sub Macro4(wb As Workbook)
     Dim wsSource1 As Worksheet, wsSource2 As Worksheet, wsSource3 As Worksheet, wsSource4 As Worksheet, wsSource5 As Worksheet
     Dim wsTarget1 As Worksheet, wsTarget2 As Worksheet, wsTarget3 As Worksheet, wsTarget4 As Worksheet
     Dim LastRow As Long, i As Long
+    Dim delRange As Range
 
     Set wsSource1 = wb.Sheets("Sheet1")
     Set wsSource2 = wb.Sheets("Sheet2")
@@ -132,36 +138,17 @@ Sub Macro4(wb As Workbook)
     
     wsTarget4.Range("A15:Z315").Value = wsSource5.Range("A2:Z302").Value
     
-    
     ' 숫자 형식 적용
     wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget2.Range("E16:U316").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget4.Range("G15:O315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget4.Range("T15:Z315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    
-    ' wsTarget2 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
-    For i = 316 To 16 Step -1
-        If wsTarget2.Cells(i, "B").Value = "" Then
-            wsTarget2.Rows(i).Delete Shift:=xlUp
-        End If
-    Next i
-    
-    ' wsTarget3 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
-    For i = 215 To 16 Step -1
-        If wsTarget3.Cells(i, "B").Value = "" Then
-            wsTarget3.Rows(i).Delete Shift:=xlUp
-        End If
-    Next i
-    
-    
-    ' wsTarget4 빈 행 삭제 (B열 비어 있는 경우로 로직작성)
-    For i = 315 To 16 Step -1
-        If wsTarget4.Cells(i, "B").Value = "" Then
-            wsTarget4.Rows(i).Delete Shift:=xlUp
-        End If
-    Next i
-    
+
+    ' 빈 행 삭제 (B열 비어 있는 경우로 로직 작성)
+    DeleteEmptyRows wsTarget2, "B", 16, 316
+    DeleteEmptyRows wsTarget3, "B", 16, 215
+    DeleteEmptyRows wsTarget4, "B", 16, 315
     
     ' 원본 시트 삭제
     Application.DisplayAlerts = False
@@ -181,3 +168,21 @@ Sub Macro4(wb As Workbook)
     ' 첫 번째 시트를 선택
     wb.Worksheets(1).Activate
 End Sub
+
+Sub DeleteEmptyRows(ws As Worksheet, col As String, startRow As Long, endRow As Long)
+    Dim delRange As Range
+    Dim i As Long
+    
+    For i = endRow To startRow Step -1
+        If ws.Cells(i, col).Value = "" Then
+            If delRange Is Nothing Then
+                Set delRange = ws.Rows(i)
+            Else
+                Set delRange = Union(delRange, ws.Rows(i))
+            End If
+        End If
+    Next i
+    
+    If Not delRange Is Nothing Then delRange.Delete Shift:=xlUp
+End Sub
+
