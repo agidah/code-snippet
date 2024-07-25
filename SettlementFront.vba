@@ -124,30 +124,32 @@ Sub Macro4(wb As Workbook)
     wsTarget1.Range("M14").Value = wsSource1.Range("AC2").Value
     wsTarget1.Range("N14").Value = wsSource1.Range("AD2").Value
     
-    wsTarget2.Range("B16:D316").Value = wsSource2.Range("G2:I302").Value
-    wsTarget2.Range("E16:E316").Value = wsSource2.Range("L2:L302").Value
-    wsTarget2.Range("F16:F316").Value = wsSource2.Range("O2:O302").Value
-    wsTarget2.Range("G16:U316").Value = wsSource2.Range("P2:AE302").Value
+    wsTarget2.Range("B18:D318").Value = wsSource2.Range("G2:I302").Value
+    wsTarget2.Range("E18:E318").Value = wsSource2.Range("L2:L302").Value
+    wsTarget2.Range("F18:F318").Value = wsSource2.Range("O2:O302").Value
+    wsTarget2.Range("G18:U318").Value = wsSource2.Range("P2:AE302").Value
     
     wsTarget3.Range("B4").Value = wsSource1.Range("E2").Value
     wsTarget3.Range("C4").Value = wsSource1.Range("F2").Value
     wsTarget3.Range("D4").Value = wsSource1.Range("D2").Value
     wsTarget3.Range("E4").Value = wsSource1.Range("C2").Value
     wsTarget3.Range("B9:K9").Value = wsSource3.Range("E2:N2").Value
-    wsTarget3.Range("B15:D215").Value = wsSource4.Range("E2:G202").Value
+    wsTarget3.Range("B10:K10").Value = wsSource3.Range("E3:N3").Value
+    wsTarget3.Range("B16:D216").Value = wsSource4.Range("E2:G202").Value
     
     wsTarget4.Range("A15:Z315").Value = wsSource5.Range("A2:Z302").Value
     
     ' 숫자 형식 적용
     wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget2.Range("E16:U316").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget2.Range("E18:U318").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget4.Range("G15:O315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget4.Range("T15:Z315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
 
     ' 빈 행 삭제 (B열 비어 있는 경우로 로직 작성)
-    DeleteEmptyRows wsTarget2, "B", 16, 316
-    DeleteEmptyRows wsTarget3, "B", 16, 215
+    DeleteEmptyRows wsTarget2, "B", 19, 318
+    DeleteEmptyRows wsTarget3, "B", 17, 216
+    DeleteEmptyRows wsTarget3, "I", 10, 10
     DeleteEmptyRows wsTarget4, "B", 16, 315
     
     ' 원본 시트 삭제
