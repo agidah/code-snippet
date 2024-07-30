@@ -135,14 +135,14 @@ Sub Macro4(wb As Workbook)
     wsTarget3.Range("E4").Value = wsSource1.Range("C2").Value
     wsTarget3.Range("B9:K9").Value = wsSource3.Range("E2:N2").Value
     wsTarget3.Range("B10:K10").Value = wsSource3.Range("E3:N3").Value
-    wsTarget3.Range("B16:D216").Value = wsSource4.Range("E2:G202").Value
+    wsTarget3.Range("B16:G216").Value = wsSource4.Range("E2:J202").Value
     
     wsTarget4.Range("A15:Z315").Value = wsSource5.Range("A2:Z302").Value
     
     ' 숫자 형식 적용
     wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget2.Range("E18:U318").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget2.Range("E16:U316").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget4.Range("G15:O315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget4.Range("T15:Z315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
 
