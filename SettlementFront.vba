@@ -87,7 +87,7 @@ Sub CopySheets(wbSource As Workbook, wbTarget As Workbook)
     Dim sheetNames As Variant
     Dim i As Long
 
-    sheetNames = Array("갑지_협력사 전체 정산 확인용", "을지_협력사 소속 라이더 정산 확인용", "관리비", "추가배달료", "고용보험소급정산")
+    sheetNames = Array("갑지_협력사 전체 정산 확인용", "을지_협력사 소속 라이더 정산 확인용", "관리비", "추가배달료", "프로모션", "고용보험소급정산")
 
     For i = LBound(sheetNames) To UBound(sheetNames)
         wbSource.Sheets(sheetNames(i)).Copy After:=wbTarget.Sheets(wbTarget.Sheets.Count)
@@ -95,8 +95,8 @@ Sub CopySheets(wbSource As Workbook, wbTarget As Workbook)
 End Sub
 
 Sub Macro4(wb As Workbook)
-    Dim wsSource1 As Worksheet, wsSource2 As Worksheet, wsSource3 As Worksheet, wsSource4 As Worksheet, wsSource5 As Worksheet
-    Dim wsTarget1 As Worksheet, wsTarget2 As Worksheet, wsTarget3 As Worksheet, wsTarget4 As Worksheet, wsTarget5 As Worksheet
+    Dim wsSource1 As Worksheet, wsSource2 As Worksheet, wsSource3 As Worksheet, wsSource4 As Worksheet, wsSource5 As Worksheet, wsSource6 As Worksheet
+    Dim wsTarget1 As Worksheet, wsTarget2 As Worksheet, wsTarget3 As Worksheet, wsTarget4 As Worksheet, wsTarget5 As Worksheet, wsTarget6 As Worksheet
     Dim LastRow As Long, i As Long
     Dim delRange As Range
 
@@ -105,25 +105,27 @@ Sub Macro4(wb As Workbook)
     Set wsSource3 = wb.Sheets("Sheet3")
     Set wsSource4 = wb.Sheets("Sheet4")
     Set wsSource5 = wb.Sheets("Sheet5")
+    Set wsSource6 = wb.Sheets("Sheet6")
     
     Set wsTarget1 = wb.Sheets("갑지_협력사 전체 정산 확인용")
     Set wsTarget2 = wb.Sheets("을지_협력사 소속 라이더 정산 확인용")
     Set wsTarget3 = wb.Sheets("관리비")
     Set wsTarget4 = wb.Sheets("추가배달료")
-    Set wsTarget5 = wb.Sheets("고용보험소급정산")
+    Set wsTarget5 = wb.Sheets("프로모션")
+    Set wsTarget6 = wb.Sheets("고용보험소급정산")
     
     ' 매크로 작업 수행 - 특정 셀 범위를 복사하여 붙여넣기
     wsTarget1.Range("D5").Resize(4, 1).Value = Application.Transpose(wsSource1.Range("C2:F2").Value)
     wsTarget1.Range("B14:C14").Value = wsSource1.Range("A2:B2").Value
     wsTarget1.Range("D14").Value = wsSource1.Range("J2").Value
     wsTarget1.Range("E14").Value = wsSource1.Range("M2").Value
-    wsTarget1.Range("B20:D20").Value = wsSource1.Range("P2:R2").Value
-    wsTarget1.Range("F14").Value = wsSource1.Range("Q2").Value
-    wsTarget1.Range("G14:J14").Value = wsSource1.Range("S2:V2").Value
-    wsTarget1.Range("K14").Value = wsSource1.Range("W2").Value
-    wsTarget1.Range("L14").Value = wsSource1.Range("Z2").Value
-    wsTarget1.Range("M14").Value = wsSource1.Range("AC2").Value
+    wsTarget1.Range("B20:D20").Value = wsSource1.Range("Q2:S2").Value
+    wsTarget1.Range("F14").Value = wsSource1.Range("N2").Value
+    wsTarget1.Range("G14").Value = wsSource1.Range("R2").Value
+    wsTarget1.Range("H14:L14").Value = wsSource1.Range("T2:X2").Value
+    wsTarget1.Range("M14").Value = wsSource1.Range("AA2").Value
     wsTarget1.Range("N14").Value = wsSource1.Range("AD2").Value
+    wsTarget1.Range("O14").Value = wsSource1.Range("AE2").Value
     
     wsTarget2.Range("B18:D318").Value = wsSource2.Range("G2:I302").Value
     wsTarget2.Range("E18:E318").Value = wsSource2.Range("L2:L302").Value
@@ -143,20 +145,27 @@ Sub Macro4(wb As Workbook)
     wsTarget4.Range("E4").Value = wsSource1.Range("C2").Value
     wsTarget4.Range("B11:F211").Value = wsSource4.Range("E2:I202").Value
     
-    wsTarget5.Range("A15:Z315").Value = wsSource5.Range("A2:Z302").Value
+    wsTarget5.Range("B4").Value = wsSource1.Range("E2").Value
+    wsTarget5.Range("C4").Value = wsSource1.Range("F2").Value
+    wsTarget5.Range("D4").Value = wsSource1.Range("D2").Value
+    wsTarget5.Range("E4").Value = wsSource1.Range("C2").Value
+    wsTarget5.Range("B11:E211").Value = wsSource5.Range("E2:H202").Value
+    
+    wsTarget6.Range("A15:Z315").Value = wsSource6.Range("A2:Z302").Value
     
     ' 숫자 형식 적용
-    wsTarget1.Range("D14:N14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget1.Range("D14:O14").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget1.Range("B20:D20").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
     wsTarget2.Range("E18:U318").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget5.Range("G15:O315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
-    wsTarget5.Range("T15:Z315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget6.Range("G15:O315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
+    wsTarget6.Range("T15:Z315").NumberFormat = "_ * #,##0_ ;-* #,##0_ ;-_ "
 
     ' 빈 행 삭제 (B열 비어 있는 경우로 로직 작성)
     DeleteEmptyRows wsTarget2, "B", 19, 318
     DeleteEmptyRows wsTarget3, "I", 10, 109
     DeleteEmptyRows wsTarget4, "B", 12, 211
-    DeleteEmptyRows wsTarget5, "B", 16, 315
+    DeleteEmptyRows wsTarget5, "B", 12, 211
+    DeleteEmptyRows wsTarget6, "B", 16, 315
     
     ' 원본 시트 삭제
     Application.DisplayAlerts = False
@@ -165,6 +174,7 @@ Sub Macro4(wb As Workbook)
     wsSource3.Delete
     wsSource4.Delete
     wsSource5.Delete
+    wsSource6.Delete
     Application.DisplayAlerts = True
     
     ' 모든 시트의 커서를 A1로 이동
